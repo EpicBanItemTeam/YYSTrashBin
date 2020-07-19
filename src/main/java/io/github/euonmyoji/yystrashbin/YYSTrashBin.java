@@ -30,7 +30,7 @@ import java.util.UUID;
  * @author yinyangshi
  */
 @Plugin(id = "yystrashbin", name = "YYSTrashBin",
-        version = "@spongeVersion", description = "throw trash", authors = "yinyangshi")
+        version = "@spongeVersion@", description = "throw trash", authors = "yinyangshi")
 public class YYSTrashBin {
     private static final HashMap<UUID, ItemStack> map = new HashMap<>();
     @Inject
