@@ -1,0 +1,57 @@
+plugins {
+    id 'java'
+}
+
+plugins {
+    id 'org.spongepowered.plugin' version '0.9.0'
+    id 'ninja.miserable.blossom' version '1.0.1'
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+defaultTasks 'clean', 'build'
+
+blossom {
+    replaceToken('@spongeVersion@', spongeVersion)
+}
+group 'io.github.euonmyoji.yystrashbin'
+
+configurations {
+    shade
+    compile.extendsFrom(shade)
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'sponge'
+        url = 'https://repo.spongepowered.org/maven'
+    }
+    maven { url = 'https://jitpack.io' }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+dependencies {
+    compileOnly "org.spongepowered:spongeapi:${spongeapi}"
+    annotationProcessor "org.spongepowered:spongeapi:${spongeapi}"
+    shade 'org.bstats.bStats-Metrics:bstats-sponge:1.4'
+}
+
+version = "${spongeVersion}"
+shadowJar() {
+    configurations = [project.configurations.compile]
+    from sourceSets.main.output
+    classifier = ""
+}
+
+artifacts {
+    archives shadowJar
+}
+
+jar.setEnabled(true)
+
